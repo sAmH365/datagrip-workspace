@@ -31,6 +31,6 @@ SELECT length, SQRT(length)
 FROM film
 WHERE length >= 120;
 
--- 7. payment 테이블에서 결제 금액( amount )을 소수점 첫 번째 자리에서 반올림하여 출력해주세요.
+-- 7. payment 테이블에서 결제 금액( amount )을 소수점 첫 번째 자리에서 반올림하여 출력해주세요..
 SELECt amount, ROUND(amount, 0)
 FROM payment
