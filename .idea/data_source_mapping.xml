@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/849e13b1-a390-4b74-9eab-d830e6878203/console.sql" value="849e13b1-a390-4b74-9eab-d830e6878203" />
     <file url="file://$PROJECT_DIR$/sql-advanced/섹션4-SQL 함수 정리하기/날짜-시관 관련 SQL 함수 정리.sql" value="849e13b1-a390-4b74-9eab-d830e6878203" />
     <file url="file://$PROJECT_DIR$/sql-advanced/섹션4-SQL 함수 정리하기/문자열 관련 SQL 함수 정리.sql" value="849e13b1-a390-4b74-9eab-d830e6878203" />
+    <file url="file://$PROJECT_DIR$/sql-advanced/섹션4-SQL 함수 정리하기/숫자 관련 SQL 함수 정리.sql" value="849e13b1-a390-4b74-9eab-d830e6878203" />
   </component>
 </project>
