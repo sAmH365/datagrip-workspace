@@ -28,6 +28,35 @@ WHERE customer_id IN (
   )
 );
 
+-- 3. 가장 많은 영화를 대여한 고객의 이름 (`first_name` ,`last_name`) 찾기
+SELECT first_name, last_name
+FROM customer
+WHERE customer_id = (
+    SELECT customer_id
+    FROM rental
+    GROUP BY customer_id
+    ORDER BY COUNT(*) DESC
+    LIMIT 1
+);
+
+-- 4. 각 고객에 대해 자신이 대여한 평균 영화 길이(`length`)보다 긴 영화들의 제목(`title`)을 찾기 ??
+SELECT *
+FROM customer
+LIMIT 30;
+
+SELECT *
+FROM film
+LIMIT 10;
+
+SELECT *
+FROM rental
+LIMIT 100;
+
+SELECT *
+FROM inventory
+LIMIT 100;
+
+-- 자신이 대여한 영화 찾기
 
 /**
 -- 복합 연습문제
