@@ -39,24 +39,20 @@ WHERE customer_id = (
     LIMIT 1
 );
 
--- 4. 각 고객에 대해 자신이 대여한 평균 영화 길이(`length`)보다 긴 영화들의 제목(`title`)을 찾기 ??
-SELECT *
-FROM customer
-LIMIT 30;
+-- 4. 각 고객에 대해 자신이 대여한 평균 영화 길이(`length`)보다 긴 영화들의 제목(`title`)을 찾기
+SELECT C.first_name, C.last_name, F.title
+FROM customer C
+JOIN rental R ON R.customer_id = C.customer_id
+JOIN inventory I ON I.inventory_id = R.inventory_id
+JOIN film F ON F.film_id = I.film_id
+WHERE F.length > (
+    SELECT AVG(FIL.length)
+    FROM film FIL
+    JOIN inventory INV ON INV.film_id = FIL.film_id
+    JOIN rental REN ON REN.inventory_id = INV.inventory_id
+    WHERE REN.customer_id = C.customer_id
+);
 
-SELECT *
-FROM film
-LIMIT 10;
-
-SELECT *
-FROM rental
-LIMIT 100;
-
-SELECT *
-FROM inventory
-LIMIT 100;
-
--- 자신이 대여한 영화 찾기
 
 /**
 -- 복합 연습문제
