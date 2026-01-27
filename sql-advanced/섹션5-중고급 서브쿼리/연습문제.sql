@@ -11,6 +11,24 @@ SELECT title
 FROM film
 WHERE length > (SELECT AVG(length) FROM film);
 
+-- 2. `rental` 테이블에서 고객별 평균 대여 횟수보다 많은 대여를 한 고객들의 이름(`first_name` ,`last_name`) 찾기
+SELECT first_name, last_name
+FROM customer
+WHERE customer_id IN (
+  SELECT customer_id
+  FROM rental
+  GROUP BY customer_id
+  HAVING COUNT(*) > (
+    SELECT AVG(rental_count)
+    FROM (
+      SELECT COUNT(*) AS rental_count
+      FROM rental
+      GROUP BY customer_id
+    ) AS rental_count
+  )
+);
+
+
 /**
 -- 복합 연습문제
 1. `rental` 과`inventory` 테이블을 JOIN하고,`film` 테이블에 있는
