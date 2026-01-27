@@ -6,6 +6,10 @@
 4. 각 고객에 대해 자신이 대여한 평균 영화 길이(`length`)보다 긴 영화들의 제목(`title`)을 찾기
 */
 
+-- 1. film 테이블에서 평균 영화 길이(`length`)보다 긴 영화들의 제목(`title`) 찾기
+SELECT title
+FROM film
+WHERE length > (SELECT AVG(length) FROM film);
 
 /**
 -- 복합 연습문제
