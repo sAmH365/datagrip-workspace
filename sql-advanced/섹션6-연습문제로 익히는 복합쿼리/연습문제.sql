@@ -12,7 +12,8 @@
 
 -- 1. `rental` 과`inventory` 테이블을 JOIN하고,
 -- `film` 테이블에 있는`replacement_cost` 가 $20 이상인 영화를 대여한 고객의 이름을 찾기. 고객 이름은 소문자로 출력.
-SELECT CONCAT(LOWER(C.first_name), ' ', LOWER(C.last_name)) AS name
+SELECT
+    DISTINCT CONCAT(LOWER(C.first_name), ' ', LOWER(C.last_name)) AS name
 FROM customer C
 JOIN rental R ON R.customer_id = C.customer_id
 JOIN inventory I ON I.inventory_id = R.inventory_id
@@ -33,9 +34,40 @@ AND LENGTH(description) > (
 -- 과 해당 영화를 대여한 고객의 이메일을 찾기.
 SELECT F.title, C.email
 FROM customer C
-JOIN rental R ON R.customer_id = C.customer_id
+JOIN rental R USING(customer_id)
 JOIN inventory I ON I.inventory_id = R.inventory_id
 JOIN film F ON F.film_id = I.film_id
 WHERE F.rating = 'R'
+# AND YEAR(R.rental_date) = 2005
+# AND MONTH(R.rental_date) = 8;
 AND R.rental_date >= '2005-08-01'
 AND R.rental_date <  '2005-09-01';
+
+-- 4. `payment` 테이블에서 가장 마지막에 결재된 일시에서 30일 이전까지의 모든 결제 내역을 찾고, 해당 결재 내역에 대해서,
+-- 각 고객별 총 결제 금액과 평균 결제 금액을 소수점 둘째 자리에서 반올림하여 출력
+SELECT
+    customer_id,
+    ROUND(SUM(amount), 1),
+    ROUND(AVG(amount), 1)
+FROM payment
+WHERE payment_date >= DATE_SUB(
+    (SELECT MAX(payment_date) FROM payment), INTERVAL 30 DAY
+)
+GROUP BY customer_id;
+
+-- 5. `actor`와 `film_actor` 테이블을 JOIN하고, 'Sci-Fi' 카테고리에 속한 영화에 출연한 배우의 이름을 찾기. 배우의 이름은 성과 이름을 연결하여 대문자로 출력.
+SELECT CONCAT(A.first_name, ' ', A.last_name)
+FROM actor A
+JOIN film_actor AC ON AC.actor_id = A.actor_id
+JOIN film F ON F.film_id = AC.film_id
+JOIN film_category FC ON FC.film_id = F.film_id
+JOIN category C ON C.category_id = FC.category_id
+WHERE C.name = 'Sci-Fi';
+
+
+
+SELECT * FROM actor limit 10;
+SELECT * FROM film_actor limit 10;
+SELECT * FROM film  limit 10;
+SELECT * FROM film_category limit 10;
+SELECT * FROM category;
